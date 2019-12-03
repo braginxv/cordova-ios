@@ -33,7 +33,7 @@ var commandQueue = []; // Contains pending JS->Native messages.
 var isInContextOfEvalJs = 0;
 var failSafeTimerId = 0;
 
-function massageArgsJsToNative (args) {
+function messageArgsJsToNative (args) {
     if (!args || utils.typeName(args) !== 'Array') {
         return args;
     }
@@ -51,7 +51,7 @@ function massageArgsJsToNative (args) {
     return ret;
 }
 
-function massageMessageNativeToJs (message) {
+function nativeMessageToJs (message) {
     if (message.CDVType === 'ArrayBuffer') {
         var stringToArrayBuffer = function (str) {
             var ret = new Uint8Array(str.length);
@@ -68,16 +68,16 @@ function massageMessageNativeToJs (message) {
     return message;
 }
 
-function convertMessageToArgsNativeToJs (message) {
+function convertMessageNativeArgsToJs (message) {
     var args = [];
     if (!message || !Object.prototype.hasOwnProperty.call(message, 'CDVType')) {
         args.push(message);
     } else if (message.CDVType === 'MultiPart') {
         message.messages.forEach(function (e) {
-            args.push(massageMessageNativeToJs(e));
+            args.push(nativeMessageToJs(e));
         });
     } else {
-        args.push(massageMessageNativeToJs(message));
+        args.push(nativeMessageToJs(message));
     }
     return args;
 }
@@ -115,21 +115,25 @@ function iOSExec () {
             { success: successCallback, fail: failCallback };
     }
 
-    actionArgs = massageArgsJsToNative(actionArgs);
+    actionArgs = messageArgsJsToNative(actionArgs);
 
-    var command = [callbackId, service, action, actionArgs];
+    if (window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.cordova && window.webkit.messageHandlers.cordova.postMessage) {
+        var command = [callbackId, service, action, JSON.parse(JSON.stringify(actionArgs))];
+        window.webkit.messageHandlers.cordova.postMessage(command);
+    } else {
+        var command = [callbackId, service, action, actionArgs];
+        // Stringify and queue the command. We stringify to command now to
+        // effectively clone the command arguments in case they are mutated before
+        // the command is executed.
+        commandQueue.push(JSON.stringify(command));
 
-    // Stringify and queue the command. We stringify to command now to
-    // effectively clone the command arguments in case they are mutated before
-    // the command is executed.
-    commandQueue.push(JSON.stringify(command));
-
-    // If we're in the context of a stringByEvaluatingJavaScriptFromString call,
-    // then the queue will be flushed when it returns; no need for a poke.
-    // Also, if there is already a command in the queue, then we've already
-    // poked the native side, so there is no reason to do so again.
-    if (!isInContextOfEvalJs && commandQueue.length === 1) {
-        pokeNative();
+        if (!isInContextOfEvalJs && commandQueue.length === 1) {
+            // If we're in the context of a stringByEvaluatingJavaScriptFromString call,
+            // then the queue will be flushed when it returns; no need for a poke.
+            // Also, if there is already a command in the queue, then we've already
+            // poked the native side, so there is no reason to do so again.
+            pokeNative();
+        }
     }
 }
 
@@ -215,7 +219,7 @@ iOSExec.nativeFetchMessages = function () {
 iOSExec.nativeCallback = function (callbackId, status, message, keepCallback, debug) {
     return iOSExec.nativeEvalAndFetch(function () {
         var success = status === 0 || status === 1;
-        var args = convertMessageToArgsNativeToJs(message);
+        var args = convertMessageNativeArgsToJs(message);
         function nc2 () {
             cordova.callbackFromNative(callbackId, success, status, args, keepCallback);
         }
@@ -259,3 +263,12 @@ execProxy.nativeCallback = function () {
 };
 
 module.exports = execProxy;
+
+if (window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.cordova) {
+    // unregister the old bridge
+    cordova.define.remove('cordova/exec');
+    // redefine bridge to our new bridge
+    cordova.define('cordova/exec', function (require, exports, module) {
+        module.exports = execProxy;
+    });
+}

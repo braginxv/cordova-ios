@@ -95,6 +95,18 @@
 		9052DE902150D06B008E83D4 /* CDVLocalStorage.h in Headers */ = {isa = PBXBuildFile; fileRef = 7ED95CFB1AB9028C008C4574 /* CDVLocalStorage.h */; };
 		9052DE912150D06B008E83D4 /* CDVUIWebViewNavigationDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 30193A4F1AE6350A0069A75F /* CDVUIWebViewNavigationDelegate.h */; };
 		9052DE922150D06B008E83D4 /* CDVUIWebViewEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = 7ED95D001AB9028C008C4574 /* CDVUIWebViewEngine.h */; };
+		99EE54E2163B9C6A704A3E49 /* CDVWKProcessPoolFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = 99EE5504B72C826326EC253E /* CDVWKProcessPoolFactory.h */; };
+		99EE55903ED79FD1D0591C6E /* CDVWKWebViewEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 99EE54FCA7FE62F1D27D53EF /* CDVWKWebViewEngine.m */; };
+		99EE55C343055C2266640E20 /* CDVWKWebViewDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 99EE59786FCE16F077EA2558 /* CDVWKWebViewDelegate.h */; };
+		99EE55E8F5A9F926FFEF96DD /* CDVWKWebViewEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = 99EE5AC13A8C8E8736073B17 /* CDVWKWebViewEngine.h */; };
+		99EE563B27A1FDB8E454C415 /* CDVWKWebViewDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 99EE59786FCE16F077EA2558 /* CDVWKWebViewDelegate.h */; };
+		99EE5835FB7FD487366780F9 /* CDVWKWebViewDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 99EE586A26D8C4EBDCE5DE75 /* CDVWKWebViewDelegate.m */; };
+		99EE5C2C3BAE481AB0AB8B0C /* CDVWKWebViewEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 99EE54FCA7FE62F1D27D53EF /* CDVWKWebViewEngine.m */; };
+		99EE5E5525C367BD7AF435CF /* CDVWKProcessPoolFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = 99EE5504B72C826326EC253E /* CDVWKProcessPoolFactory.h */; };
+		99EE5E86307B5D4E9AA3E8A0 /* CDVWKProcessPoolFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 99EE52ADD237A22CE3D23482 /* CDVWKProcessPoolFactory.m */; };
+		99EE5F2F4A92F9A70DAE82FF /* CDVWKProcessPoolFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 99EE52ADD237A22CE3D23482 /* CDVWKProcessPoolFactory.m */; };
+		99EE5F4FE3EAF8D03E59B260 /* CDVWKWebViewDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 99EE586A26D8C4EBDCE5DE75 /* CDVWKWebViewDelegate.m */; };
+		99EE5F7DCAB912B45AA761B2 /* CDVWKWebViewEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = 99EE5AC13A8C8E8736073B17 /* CDVWKWebViewEngine.h */; };
 		A3B082D41BB15CEA00D8DC35 /* CDVGestureHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = A3B082D21BB15CEA00D8DC35 /* CDVGestureHandler.h */; };
 		A3B082D51BB15CEA00D8DC35 /* CDVGestureHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = A3B082D31BB15CEA00D8DC35 /* CDVGestureHandler.m */; };
 		C0C01EB61E3911D50056E6CB /* Cordova.h in Headers */ = {isa = PBXBuildFile; fileRef = C0C01EB41E3911D50056E6CB /* Cordova.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -178,6 +190,12 @@
 		7ED95D321AB9029B008C4574 /* NSDictionary+CordovaPreferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+CordovaPreferences.m"; sourceTree = "<group>"; };
 		7ED95D331AB9029B008C4574 /* NSMutableArray+QueueAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+QueueAdditions.h"; sourceTree = "<group>"; };
 		7ED95D341AB9029B008C4574 /* NSMutableArray+QueueAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+QueueAdditions.m"; sourceTree = "<group>"; };
+		99EE52ADD237A22CE3D23482 /* CDVWKProcessPoolFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDVWKProcessPoolFactory.m; sourceTree = "<group>"; };
+		99EE54FCA7FE62F1D27D53EF /* CDVWKWebViewEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDVWKWebViewEngine.m; sourceTree = "<group>"; };
+		99EE5504B72C826326EC253E /* CDVWKProcessPoolFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDVWKProcessPoolFactory.h; sourceTree = "<group>"; };
+		99EE586A26D8C4EBDCE5DE75 /* CDVWKWebViewDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDVWKWebViewDelegate.m; sourceTree = "<group>"; };
+		99EE59786FCE16F077EA2558 /* CDVWKWebViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDVWKWebViewDelegate.h; sourceTree = "<group>"; };
+		99EE5AC13A8C8E8736073B17 /* CDVWKWebViewEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDVWKWebViewEngine.h; sourceTree = "<group>"; };
 		A3B082D21BB15CEA00D8DC35 /* CDVGestureHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDVGestureHandler.h; sourceTree = "<group>"; };
 		A3B082D31BB15CEA00D8DC35 /* CDVGestureHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDVGestureHandler.m; sourceTree = "<group>"; };
 		AA747D9E0F9514B9006C5449 /* CordovaLib_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CordovaLib_Prefix.pch; sourceTree = SOURCE_ROOT; };
@@ -264,6 +282,7 @@
 				7ED95CF71AB9028C008C4574 /* CDVHandleOpenURL */,
 				7ED95CFA1AB9028C008C4574 /* CDVLocalStorage */,
 				7ED95CFD1AB9028C008C4574 /* CDVUIWebViewEngine */,
+				99EE5FE3B0BAE79CA9E104E2 /* CDVWKWebViewEngine */,
 			);
 			path = Plugins;
 			sourceTree = "<group>";
@@ -343,6 +362,19 @@
 			path = Classes/Public;
 			sourceTree = "<group>";
 		};
+		99EE5FE3B0BAE79CA9E104E2 /* CDVWKWebViewEngine */ = {
+			isa = PBXGroup;
+			children = (
+				99EE5504B72C826326EC253E /* CDVWKProcessPoolFactory.h */,
+				99EE52ADD237A22CE3D23482 /* CDVWKProcessPoolFactory.m */,
+				99EE5AC13A8C8E8736073B17 /* CDVWKWebViewEngine.h */,
+				99EE54FCA7FE62F1D27D53EF /* CDVWKWebViewEngine.m */,
+				99EE59786FCE16F077EA2558 /* CDVWKWebViewDelegate.h */,
+				99EE586A26D8C4EBDCE5DE75 /* CDVWKWebViewDelegate.m */,
+			);
+			path = CDVWKWebViewEngine;
+			sourceTree = "<group>";
+		};
 		A3B082D11BB15CEA00D8DC35 /* CDVGestureHandler */ = {
 			isa = PBXGroup;
 			children = (
@@ -401,6 +433,9 @@
 				9052DE912150D06B008E83D4 /* CDVUIWebViewNavigationDelegate.h in Headers */,
 				C0C01ED01E3913610056E6CB /* CDVUIWebViewDelegate.h in Headers */,
 				9052DE922150D06B008E83D4 /* CDVUIWebViewEngine.h in Headers */,
+				99EE54E2163B9C6A704A3E49 /* CDVWKProcessPoolFactory.h in Headers */,
+				99EE5F7DCAB912B45AA761B2 /* CDVWKWebViewEngine.h in Headers */,
+				99EE563B27A1FDB8E454C415 /* CDVWKWebViewDelegate.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -440,6 +475,9 @@
 				30193A511AE6350A0069A75F /* CDVUIWebViewNavigationDelegate.h in Headers */,
 				7ED95D0A1AB9028C008C4574 /* CDVUIWebViewDelegate.h in Headers */,
 				7E7F69B81ABA368F007546F4 /* CDVUIWebViewEngine.h in Headers */,
+				99EE5E5525C367BD7AF435CF /* CDVWKProcessPoolFactory.h in Headers */,
+				99EE55E8F5A9F926FFEF96DD /* CDVWKWebViewEngine.h in Headers */,
+				99EE55C343055C2266640E20 /* CDVWKWebViewDelegate.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -545,6 +583,9 @@
 				9052DE862150D040008E83D4 /* CDVUIWebViewNavigationDelegate.m in Sources */,
 				9052DE872150D040008E83D4 /* CDVUIWebViewDelegate.m in Sources */,
 				9052DE882150D040008E83D4 /* CDVUIWebViewEngine.m in Sources */,
+				99EE5F2F4A92F9A70DAE82FF /* CDVWKProcessPoolFactory.m in Sources */,
+				99EE5C2C3BAE481AB0AB8B0C /* CDVWKWebViewEngine.m in Sources */,
+				99EE5F4FE3EAF8D03E59B260 /* CDVWKWebViewDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -576,6 +617,9 @@
 				30193A501AE6350A0069A75F /* CDVUIWebViewNavigationDelegate.m in Sources */,
 				7ED95D0B1AB9028C008C4574 /* CDVUIWebViewDelegate.m in Sources */,
 				7ED95D0D1AB9028C008C4574 /* CDVUIWebViewEngine.m in Sources */,
+				99EE5E86307B5D4E9AA3E8A0 /* CDVWKProcessPoolFactory.m in Sources */,
+				99EE55903ED79FD1D0591C6E /* CDVWKWebViewEngine.m in Sources */,
+				99EE5835FB7FD487366780F9 /* CDVWKWebViewDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

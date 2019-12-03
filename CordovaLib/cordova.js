@@ -970,19 +970,23 @@ function iOSExec () {
 
     actionArgs = massageArgsJsToNative(actionArgs);
 
-    var command = [callbackId, service, action, actionArgs];
+    if (window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.cordova && window.webkit.messageHandlers.cordova.postMessage) {
+        var command = [callbackId, service, action, JSON.parse(JSON.stringify(actionArgs))];
+        window.webkit.messageHandlers.cordova.postMessage(command);
+    } else {
+        var command = [callbackId, service, action, actionArgs];
+        // Stringify and queue the command. We stringify to command now to
+        // effectively clone the command arguments in case they are mutated before
+        // the command is executed.
+        commandQueue.push(JSON.stringify(command));
 
-    // Stringify and queue the command. We stringify to command now to
-    // effectively clone the command arguments in case they are mutated before
-    // the command is executed.
-    commandQueue.push(JSON.stringify(command));
-
-    // If we're in the context of a stringByEvaluatingJavaScriptFromString call,
-    // then the queue will be flushed when it returns; no need for a poke.
-    // Also, if there is already a command in the queue, then we've already
-    // poked the native side, so there is no reason to do so again.
-    if (!isInContextOfEvalJs && commandQueue.length === 1) {
-        pokeNative();
+        if (!isInContextOfEvalJs && commandQueue.length === 1) {
+            // If we're in the context of a stringByEvaluatingJavaScriptFromString call,
+            // then the queue will be flushed when it returns; no need for a poke.
+            // Also, if there is already a command in the queue, then we've already
+            // poked the native side, so there is no reason to do so again.
+            pokeNative();
+        }
     }
 }
 
@@ -1113,6 +1117,14 @@ execProxy.nativeCallback = function () {
 
 module.exports = execProxy;
 
+if (window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.cordova && window.webkit.messageHandlers.cordova.postMessage) {
+    // unregister the old bridge
+    cordova.define.remove('cordova/exec');
+    // redefine bridge to our new bridge
+    cordova.define('cordova/exec', function (require, exports, module) {
+        module.exports = execProxy;
+    });
+}
 });
 
 // file: src/common/exec/proxy.js

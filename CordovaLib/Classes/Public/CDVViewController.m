@@ -27,6 +27,7 @@
 #import "CDVLocalStorage.h"
 #import "CDVCommandDelegateImpl.h"
 #import <Foundation/NSCharacterSet.h>
+#import <WebKit/WebKit.h>
 
 @interface CDVViewController () {
     NSInteger _userAgentLockToken;
@@ -286,12 +287,6 @@
 
     [CDVLocalStorage __fixupDatabaseLocationsWithBackupType:backupWebStorageType];
 
-    // // Instantiate the WebView ///////////////
-
-    if (!self.webView) {
-        [self createGapView];
-    }
-
     // /////////////////
 
     /*
@@ -300,7 +295,7 @@
      */
     if ([backupWebStorageType isEqualToString:@"local"]) {
         NSString* localStorageFeatureName = @"localstorage";
-        if ([self.pluginsMap objectForKey:localStorageFeatureName]) { // plugin specified in config
+        if (self.pluginsMap[localStorageFeatureName]) { // plugin specified in config
             [self.startupPluginNames addObject:localStorageFeatureName];
         }
     }
@@ -315,6 +310,21 @@
         }
 
         [CDVTimer stop:@"TotalPluginStartup"];
+    }
+}
+
+- (void)setLockToken:(NSInteger)lockToken
+{
+	_userAgentLockToken = lockToken;
+	[CDVUserAgentUtil setUserAgent:self.userAgent lockToken:lockToken];
+}
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+
+    if (!self.webView) {
+        [self createGapView];
     }
 
     // /////////////////
@@ -343,22 +353,11 @@
         }
     }];
 
-    // /////////////////
 
     NSString* bgColorString = [self.settings cordovaSettingForKey:@"BackgroundColor"];
     UIColor* bgColor = [self colorFromColorString:bgColorString];
     [self.webView setBackgroundColor:bgColor];
-}
 
-- (void)setLockToken:(NSInteger)lockToken
-{
-	_userAgentLockToken = lockToken;
-	[CDVUserAgentUtil setUserAgent:self.userAgent lockToken:lockToken];
-}
-
--(void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
     [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:CDVViewWillAppearNotification object:nil]];
 }
 
@@ -514,7 +513,7 @@
     NSString* webViewEngineClass = [self.settings cordovaSettingForKey:@"CordovaWebViewEngine"];
 
     if (!defaultWebViewEngineClass) {
-        defaultWebViewEngineClass = @"CDVUIWebViewEngine";
+        defaultWebViewEngineClass = @"CDVWKWebViewEngine";
     }
     if (!webViewEngineClass) {
         webViewEngineClass = defaultWebViewEngineClass;
@@ -565,14 +564,18 @@
 - (void)createGapView
 {
     CGRect webViewBounds = self.view.bounds;
-
     webViewBounds.origin = self.view.bounds.origin;
+    UIView* webView = [self newCordovaViewWithFrame:webViewBounds];
 
-    UIView* view = [self newCordovaViewWithFrame:webViewBounds];
+    self.webView.scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
 
-    view.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
-    [self.view addSubview:view];
-    [self.view sendSubviewToBack:view];
+    [self.view addSubview:webView];
+    [self.view sendSubviewToBack:webView];
+
+    webView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+
+    self.view.backgroundColor = UIColor.brownColor;
+    webView.backgroundColor = UIColor.greenColor;
 }
 
 - (void)didReceiveMemoryWarning

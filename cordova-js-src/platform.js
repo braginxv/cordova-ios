@@ -22,9 +22,15 @@
 module.exports = {
     id: 'ios',
     bootstrap: function () {
+        let modulemapper = require('cordova/modulemapper');
+        
         // Attach the console polyfill that is iOS-only to window.console
         // see the file under plugin/ios/console.js
-        require('cordova/modulemapper').clobbers('cordova/plugin/ios/console', 'window.console');
+        modulemapper.clobbers('cordova/plugin/ios/console', 'window.console');
+        
+        // Attach the WKWebView extension methods
+        // see the file under plugin/ios/wkwebview.js
+        modulemapper.clobbers('cordova/plugin/ios/wkwebview', 'window.WKWebView');
 
         require('cordova/channel').onNativeReady.fire();
     }

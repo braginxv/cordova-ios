@@ -27,12 +27,23 @@
 
 #import "MainViewController.h"
 
+#if __has_include("Firebase/Firebase.h")
+    #import "Firebase/Firebase.h"
+    #define FIREBASE_INCLUDED 1
+#endif
+
 @implementation MainViewController
 
 - (id)initWithNibName:(NSString*)nibNameOrNil bundle:(NSBundle*)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
+#ifdef FIREBASE_INCLUDED
+        if (!FIRApp.defaultApp) {
+            [FIRApp configure];
+        }
+#endif
+
         // Uncomment to override the CDVCommandDelegateImpl used
         // _commandDelegate = [[MainCommandDelegate alloc] initWithViewController:self];
         // Uncomment to override the CDVCommandQueue used

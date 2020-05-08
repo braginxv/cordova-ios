@@ -20,14 +20,10 @@
 #import <objc/message.h>
 #import "CDV.h"
 #import "CDVPlugin+Private.h"
-#import "CDVUIWebViewDelegate.h"
 #import "CDVConfigParser.h"
-#import "CDVUserAgentUtil.h"
-#import <AVFoundation/AVFoundation.h>
 #import "NSDictionary+CordovaPreferences.h"
 #import "CDVLocalStorage.h"
 #import "CDVCommandDelegateImpl.h"
-#import <Foundation/NSCharacterSet.h>
 
 @interface CDVViewController () {
     NSInteger _userAgentLockToken;

@@ -19,8 +19,6 @@
 
 #import "CDVUserAgentUtil.h"
 
-#import <UIKit/UIKit.h>
-
 // #define VerboseLog NSLog
 #define VerboseLog(...) do {} while (0)
 
@@ -41,27 +39,7 @@ static NSMutableArray* gPendingSetUserAgentBlocks = nil;
                                                      name:NSCurrentLocaleDidChangeNotification object:nil];
 
         NSUserDefaults* userDefaults = [NSUserDefaults standardUserDefaults];
-        NSString* systemVersion = [[UIDevice currentDevice] systemVersion];
-        NSString* localeStr = [[NSLocale currentLocale] localeIdentifier];
-        // Record the model since simulator can change it without re-install (CB-5420).
-        NSString* model = [UIDevice currentDevice].model;
-        // Record the version of the app so that we can bust the cache when it changes (CB-10078)
-        NSString* appVersion = [[NSBundle mainBundle] infoDictionary][@"CFBundleVersion"];
-        NSString* systemAndLocale = [NSString stringWithFormat:@"%@ %@ %@ %@", appVersion, model, systemVersion, localeStr];
-
-        NSString* cordovaUserAgentVersion = [userDefaults stringForKey:kCdvUserAgentVersionKey];
         gOriginalUserAgent = [userDefaults stringForKey:kCdvUserAgentKey];
-        BOOL cachedValueIsOld = ![systemAndLocale isEqualToString:cordovaUserAgentVersion];
-
-        if ((gOriginalUserAgent == nil) || cachedValueIsOld) {
-            UIWebView* sampleWebView = [[UIWebView alloc] initWithFrame:CGRectZero];
-            gOriginalUserAgent = [sampleWebView stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"];
-
-            [userDefaults setObject:gOriginalUserAgent forKey:kCdvUserAgentKey];
-            [userDefaults setObject:systemAndLocale forKey:kCdvUserAgentVersionKey];
-
-            [userDefaults synchronize];
-        }
     }
     return gOriginalUserAgent;
 }

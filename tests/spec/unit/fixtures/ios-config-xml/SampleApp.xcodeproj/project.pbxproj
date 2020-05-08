@@ -391,6 +391,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = NO;
+				WK_WEB_VIEW_ONLY = 1;
 			};
 			name = Debug;
 		};
@@ -430,6 +431,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = NO;
+				WK_WEB_VIEW_ONLY = 1;
 			};
 			name = Release;
 		};
